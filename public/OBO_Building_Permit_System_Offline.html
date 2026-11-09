@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OBO BUILDING PERMIT & CERTIFICATE OF OCCUPANCY RECORDS MANAGEMENT SYSTEM</title>
+<style>
+:root{--ink:#17232b;--paper:#f2f8fb;--card:#fff;--line:#cfe0ea;--brand:#14527f;--brand-d:#0f3d64;--on-brand:#fff;--stamp:#b3302a;--muted:#4f6572;--ok:#1b7340;--leaf:#1b7340;--sun:#fcee21;--sun-d:#c9a800;--soon:#8a6a00;--hdr-btn:#0f3d64;--g1:#d9eefa;--g2:#eaf5fb;--g3:#fbecef}
+@media (prefers-color-scheme:dark){:root{--ink:#e8f1f5;--paper:#0f1b22;--card:#162832;--line:#2b4350;--brand:#38bdf8;--brand-d:#0284c7;--on-brand:#0b2230;--stamp:#ef7d75;--muted:#9db3bf;--ok:#4ade80;--leaf:#4ade80;--sun-d:#fde047;--soon:#fde047;--g1:#0f2a38;--g2:#0f1b22;--g3:#241d22}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header{padding:14px max(20px,calc((100% - 1140px)/2));background:var(--sun);color:#17232b;border-bottom:5px solid var(--brand);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.header-titles h1{margin:0;font:700 22px/1.2 Georgia,"Times New Roman",serif;color:#0f3d64;letter-spacing:.2px}
+.header-titles p{margin:2px 0 0;color:#3d3a00;font-size:13px;font-weight:600}
+.brand{display:flex;gap:12px;align-items:center}
+.logo-group{display:flex;align-items:center;gap:6px}
+.logo{width:58px;height:58px;flex:0 0 auto;border-radius:50%;background:#fff;border:2px solid #0f3d64;display:grid;place-items:center;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.logo img{width:100%;height:100%;object-fit:contain;display:block}
+main{max-width:1140px;margin:auto;padding:16px 20px 40px;display:grid;gap:18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.stat{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);padding:12px 14px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.stat b{display:block;font:700 22px Georgia,serif;color:var(--ink)}
+.stat span{color:var(--muted);font-size:12px;font-weight:600;text-transform:uppercase}
+.stat:nth-child(2){border-left-color:var(--ok)}
+.stat:nth-child(3){border-left-color:#d97706}
+.stat:nth-child(4){border-left-color:#8b5cf6}
+tbody tr:hover{background:rgba(20,82,127,.06)}
+section.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+h2{margin:0 0 12px;font:700 18px Georgia,serif;color:#0f3d64}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+label{display:grid;gap:4px;font-size:13px;color:var(--muted);font-weight:600}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+.full{grid-column:1/-1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;grid-column:1/-1}
+button{font:inherit;font-weight:600;border:1px solid var(--brand);background:var(--brand);color:var(--on-brand);border-radius:6px;padding:8px 16px;cursor:pointer;transition:background .2s}
+button:hover{background:var(--brand-d)}
+button.ghost{background:transparent;color:var(--brand)}
+button.ghost:hover{background:var(--paper)}
+button.danger{border-color:var(--stamp);color:var(--stamp);background:transparent}
+button.danger:hover{background:var(--stamp);color:#fff}
+button.sm{padding:4px 10px;font-size:12px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.tools input{flex:1 1 240px}.tools select{width:auto}
+.wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:860px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:middle;font-size:13px}
+th{font-size:12px;color:var(--muted);cursor:pointer;white-space:nowrap;text-transform:uppercase;font-weight:700}
+td.amt,th.amt{text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;border:1px solid}
+.tag.Building{color:#0284c7;border-color:#0284c7;background:#e0f2fe}
+.tag.Occupancy{color:#059669;border-color:#059669;background:#d1fae5}
+.tag.Clearance{color:#d97706;border-color:#d97706;background:#fef3c7}
+.tag.Active{color:var(--ok);border-color:var(--ok)}
+.tag.Soon{color:var(--soon);border-color:var(--soon)}
+.tag.Expired{color:var(--stamp);border-color:var(--stamp)}
+.sub{color:var(--muted);font-size:13px}
+.empty{padding:30px;text-align:center;color:var(--muted)}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0f3d64;color:#fff;padding:9px 18px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:99;box-shadow:0 4px 12px rgba(0,0,0,.2);font-weight:600}
+#toast.on{opacity:1}
+#auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(180deg,var(--g1),var(--g2) 55%,var(--g3))}
+.authcard,dialog{background:var(--card);color:var(--ink);border:1px solid var(--line);border-top:6px solid var(--sun);border-radius:8px;padding:24px;width:min(420px,100%);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.authcard h1{font-size:20px;margin-bottom:4px;color:#0f3d64;font-family:Georgia,serif}
+.authcard form{grid-template-columns:1fr;display:grid;gap:12px;margin-top:16px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:16px;z-index:50}
+.mcard{background:var(--card);color:var(--ink);border:1px solid var(--line);border-top:5px solid var(--brand);border-radius:8px;padding:20px;width:min(580px,100%);display:grid;gap:12px}
+.mcard textarea{font:12px/1.4 ui-monospace,Consolas,monospace;min-height:180px;white-space:pre;resize:vertical}
+@media print{header button,.noprint,#f,#toast,.actions{display:none!important}body{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div id="auth">
+  <div class="authcard">
+    <div style="display:flex;justify-content:center;gap:10px;margin-bottom:12px">
+      <div class="logo"><img src="/assets/aistudio/Talisayan_logo_de080e16.jpg" alt="Municipality of Talisayan"></div>
+      <div class="logo"><img src="/assets/aistudio/Talisayan_Building_Official_Seal_5dc37e23.png" alt="Office of the Building Official"></div>
+    </div>
+    <span style="font-size:11px;font-weight:800;letter-spacing:1px;background:#0f3d64;color:#fff;padding:2px 6px;border-radius:2px">OBO TALISAYAN</span>
+    <h1>Building Permit &amp; Occupancy Registry</h1>
+    <p class="sub">Municipal Government of Talisayan, Misamis Oriental</p>
+    <form id="authForm">
+      <label>Staff Username<input name="user" required value="admin" autocomplete="username"></label>
+      <label>Password<input name="pass" type="password" required value="admin123" autocomplete="current-password"></label>
+      <button type="submit" id="authBtn">Sign In to OBO Registry</button>
+    </form>
+    <p class="sub" style="margin-top:14px;font-size:12px">Default credentials: <strong>admin</strong> / <strong>admin123</strong></p>
+  </div>
+</div>
+
+<div id="app" hidden>
+<header>
+  <div class="brand">
+    <div class="logo-group">
+      <div class="logo" title="Municipality of Talisayan (Est. 1854)"><img src="/assets/aistudio/Talisayan_logo_de080e16.jpg" alt="Talisayan Seal"></div>
+      <div class="logo" title="Office of the Building Official"><img src="/assets/aistudio/Talisayan_Building_Official_Seal_5dc37e23.png" alt="OBO Seal"></div>
+    </div>
+    <div class="header-titles">
+      <span style="font-size:10px;font-weight:800;letter-spacing:1px;background:#0f3d64;color:#fff;padding:2px 6px;border-radius:2px">OFFICE OF THE BUILDING OFFICIAL • TALISAYAN</span>
+      <h1>OBO BUILDING PERMIT &amp; OCCUPANCY RECORDS SYSTEM</h1>
+      <p>Province of Misamis Oriental • Offline Desktop &amp; Flash Drive Edition</p>
+    </div>
+  </div>
+  <div class="noprint" style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+    <span class="sub" id="who" style="font-weight:700;color:#0f3d64"></span>
+    <button class="ghost sm" id="exportCsv">Export CSV</button>
+    <button class="ghost sm" id="backup">Backup JSON</button>
+    <button class="ghost sm" id="restoreBtn">Restore</button>
+    <button class="ghost sm" onclick="window.print()">Print Report</button>
+    <button class="danger sm" id="signOut">Sign out</button>
+  </div>
+</header>
+
+<main>
+  <div class="stats">
+    <div class="stat"><b id="sCount">0</b><span>Total Permits</span></div>
+    <div class="stat"><b id="sBuilding">₱0.00</b><span>Building Permits</span></div>
+    <div class="stat"><b id="sOccupancy">₱0.00</b><span>Occupancy Certs</span></div>
+    <div class="stat"><b id="sTotal">₱0.00</b><span>Total Collected</span></div>
+  </div>
+
+  <section class="panel">
+    <h2 id="formTitle">Add New OBO Record</h2>
+    <form id="f">
+      <label>Project / Structure Name *<input name="project" required placeholder="e.g. 2-Storey Residential House"></label>
+      <label>Owner / Applicant *<input name="owner" required placeholder="e.g. Juan Dela Cruz"></label>
+      <label>Barangay (Talisayan) *
+        <select name="barangay" required>
+          <option value="">-- Select Barangay --</option>
+          <option>Poblacion</option><option>Bugdang</option><option>Calangahan</option><option>Casibole</option><option>Macopa</option>
+          <option>Magkarila</option><option>Mahaba</option><option>Mandahilag</option><option>Mintabon</option><option>Pangpangon</option>
+          <option>San Jose</option><option>Santa Ines</option><option>Sibutao</option><option>Sindangan</option><option>Tagbocboc</option>
+          <option>Tua-tua</option><option>Punta Santiago</option><option>Balisian</option>
+        </select>
+      </label>
+      <label>Permit Category *
+        <select name="type" id="typeSelect" required>
+          <option value="Building Permit">Building Permit</option>
+          <option value="Certificate of Occupancy">Certificate of Occupancy</option>
+          <option value="Mechanical Clearance">Mechanical Clearance</option>
+          <option value="Electrical Clearance">Electrical Clearance</option>
+          <option value="Sanitary Clearance">Sanitary Clearance</option>
+          <option value="Fencing Permit">Fencing Permit</option>
+          <option value="Demolition Permit">Demolition Permit</option>
+        </select>
+      </label>
+      <label>Permit / Certificate No. *<input name="permitNo" id="permitNo" required placeholder="e.g. BP-2026-0042"></label>
+      <label>Official Receipt (OR) No. *<input name="orNo" id="orNo" required placeholder="e.g. OR-8921045"></label>
+      <label>OBO Fee / Amount (₱) *<input name="amount" type="number" min="0" step="0.01" required placeholder="0.00"></label>
+      <label>Date Issued / Paid *<input name="date" type="date" required></label>
+      <label>Valid Until<input name="valid" type="date"></label>
+      <label class="full">Remarks / Assessment Notes<textarea name="remarks" rows="2" placeholder="e.g. Inspected and approved by Municipal Building Official."></textarea></label>
+      <div class="actions">
+        <button type="submit" id="saveBtn">Save Record</button>
+        <button type="button" class="ghost" id="cancelEdit" hidden>Cancel Edit</button>
+        <button type="button" class="ghost" id="resetBtn">Clear Form</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2>Registered Records</h2>
+    <div class="tools noprint">
+      <input id="q" type="search" placeholder="Search by Project, Owner, Permit #, or OR #...">
+      <select id="ft">
+        <option value="">All Permit Types</option>
+        <option value="Building Permit">Building Permit</option>
+        <option value="Certificate of Occupancy">Certificate of Occupancy</option>
+      </select>
+      <select id="fb">
+        <option value="">All Barangays</option>
+        <option>Poblacion</option><option>Bugdang</option><option>Calangahan</option><option>Casibole</option><option>Macopa</option>
+        <option>Magkarila</option><option>Mahaba</option><option>Mandahilag</option><option>Mintabon</option><option>Pangpangon</option>
+        <option>San Jose</option><option>Santa Ines</option><option>Sibutao</option><option>Sindangan</option><option>Tagbocboc</option>
+        <option>Tua-tua</option><option>Punta Santiago</option><option>Balisian</option>
+      </select>
+    </div>
+    <div class="wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Project &amp; Owner</th>
+            <th>Type</th>
+            <th>Barangay</th>
+            <th>Permit No.</th>
+            <th>OR No.</th>
+            <th>Date</th>
+            <th>Valid Until</th>
+            <th class="amt">Amount</th>
+            <th class="noprint" style="width:110px">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="empty" hidden>No records match your search filter.</div>
+  </section>
+</main>
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="mcard" role="dialog" aria-modal="true">
+    <h2 id="mTitle">Backup &amp; Restore</h2>
+    <p class="sub" id="mMsg">Copy this JSON text or save to file:</p>
+    <textarea id="mText" readonly></textarea>
+    <input type="file" id="mFile" accept=".json,application/json" hidden>
+    <div class="actions" id="mBtns"></div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+(function(){
+  var KEY="obo_registry_data_v2", data=[], editId=null;
+  var $=function(s){return document.querySelector(s)};
+  var store={
+    get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},
+    set:function(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
+  };
+
+  function toast(m){var t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2400)}
+  function peso(n){return "₱"+Number(n||0).toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+  function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+  function nextYear(){var d=new Date();d.setFullYear(d.getFullYear()+1);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+
+  function load(){
+    try{data=JSON.parse(store.get(KEY)||"[]")}catch(e){data=[]}
+  }
+  function save(){store.set(KEY,JSON.stringify(data))}
+
+  function render(){
+    var q=$("#q").value.trim().toLowerCase();
+    var ft=$("#ft").value;
+    var fb=$("#fb").value;
+
+    var filtered=data.filter(function(r){
+      if(ft&&r.type!==ft)return false;
+      if(fb&&r.barangay!==fb)return false;
+      if(q){
+        var hay=(r.project+" "+r.owner+" "+r.permitNo+" "+r.orNo+" "+r.barangay).toLowerCase();
+        if(!hay.includes(q))return false;
+      }
+      return true;
+    });
+
+    var rowsHtml="";
+    var count=0, bldgTotal=0, occTotal=0, allTotal=0;
+
+    data.forEach(function(r){
+      count++;
+      var amt=Number(r.amount||0);
+      allTotal+=amt;
+      if(r.type==="Building Permit")bldgTotal+=amt;
+      if(r.type==="Certificate of Occupancy")occTotal+=amt;
+    });
+
+    $("#sCount").textContent=count;
+    $("#sBuilding").textContent=peso(bldgTotal);
+    $("#sOccupancy").textContent=peso(occTotal);
+    $("#sTotal").textContent=peso(allTotal);
+
+    filtered.forEach(function(r){
+      var tagCls=r.type.includes("Building")?"Building":r.type.includes("Occupancy")?"Occupancy":"Clearance";
+      rowsHtml+='<tr>'+
+        '<td><strong>'+esc(r.project)+'</strong><br><span class="sub">'+esc(r.owner)+'</span></td>'+
+        '<td><span class="tag '+tagCls+'">'+esc(r.type)+'</span></td>'+
+        '<td>'+esc(r.barangay)+'</td>'+
+        '<td><span style="font-family:monospace;font-weight:700">'+esc(r.permitNo)+'</span></td>'+
+        '<td><span style="font-family:monospace">'+esc(r.orNo)+'</span></td>'+
+        '<td>'+esc(r.date)+'</td>'+
+        '<td>'+(r.valid?esc(r.valid):'-')+'</td>'+
+        '<td class="amt"><strong>'+peso(r.amount)+'</strong></td>'+
+        '<td class="noprint">'+
+          '<button class="ghost sm" onclick="window.editRec(\''+r.id+'\')">Edit</button> '+
+          '<button class="danger sm" onclick="window.delRec(\''+r.id+'\')">Del</button>'+
+        '</td>'+
+      '</tr>';
+    });
+
+    $("#rows").innerHTML=rowsHtml;
+    $("#empty").hidden=filtered.length>0;
+  }
+
+  window.editRec=function(id){
+    var r=data.find(function(x){return x.id===id});
+    if(!r)return;
+    editId=id;
+    var f=$("#f").elements;
+    f.project.value=r.project||"";
+    f.owner.value=r.owner||"";
+    f.barangay.value=r.barangay||"";
+    f.type.value=r.type||"Building Permit";
+    f.permitNo.value=r.permitNo||"";
+    f.orNo.value=r.orNo||"";
+    f.amount.value=r.amount||"";
+    f.date.value=r.date||"";
+    f.valid.value=r.valid||"";
+    f.remarks.value=r.remarks||"";
+    $("#formTitle").textContent="Edit Record ("+r.permitNo+")";
+    $("#saveBtn").textContent="Update Record";
+    $("#cancelEdit").hidden=false;
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+
+  window.delRec=function(id){
+    if(!confirm("Are you sure you want to delete this record?"))return;
+    data=data.filter(function(x){return x.id!==id});
+    save();
+    render();
+    toast("Record removed");
+  };
+
+  $("#cancelEdit").onclick=function(){
+    editId=null;
+    $("#f").reset();
+    $("#formTitle").textContent="Add New OBO Record";
+    $("#saveBtn").textContent="Save Record";
+    $("#cancelEdit").hidden=true;
+  };
+
+  $("#resetBtn").onclick=function(){
+    $("#cancelEdit").click();
+    $("#f").elements.date.value=today();
+    $("#f").elements.valid.value=nextYear();
+  };
+
+  $("#f").onsubmit=function(e){
+    e.preventDefault();
+    var fel=$("#f").elements;
+    var rec={
+      id:editId||("rec-"+Date.now()),
+      project:fel.project.value.trim(),
+      owner:fel.owner.value.trim(),
+      barangay:fel.barangay.value,
+      type:fel.type.value,
+      permitNo:fel.permitNo.value.trim(),
+      orNo:fel.orNo.value.trim(),
+      amount:parseFloat(fel.amount.value)||0,
+      date:fel.date.value,
+      valid:fel.valid.value,
+      remarks:fel.remarks.value.trim()
+    };
+
+    if(editId){
+      var idx=data.findIndex(function(x){return x.id===editId});
+      if(idx>=0)data[idx]=rec;
+      toast("Record updated successfully!");
+    } else {
+      data.unshift(rec);
+      toast("New record saved to registry!");
+    }
+
+    save();
+    render();
+    $("#resetBtn").click();
+  };
+
+  $("#q").oninput=render;
+  $("#ft").onchange=render;
+  $("#fb").onchange=render;
+
+  $("#authForm").onsubmit=function(e){
+    e.preventDefault();
+    var u=$("#authForm").elements.user.value.trim();
+    var p=$("#authForm").elements.pass.value;
+    if(u==="admin"&&p==="admin123"){
+      sessionStorage.setItem("obo_user",u);
+      showApp(u);
+    } else {
+      alert("Invalid credentials. Please use admin / admin123");
+    }
+  };
+
+  function showApp(u){
+    $("#auth").hidden=true;
+    $("#app").hidden=false;
+    $("#who").textContent="User: "+u;
+    $("#f").elements.date.value=today();
+    $("#f").elements.valid.value=nextYear();
+    render();
+  }
+
+  $("#signOut").onclick=function(){
+    sessionStorage.removeItem("obo_user");
+    $("#app").hidden=true;
+    $("#auth").hidden=false;
+  };
+
+  $("#exportCsv").onclick=function(){
+    if(!data.length){alert("No records to export.");return}
+    var csv="Project,Owner,Barangay,Permit Type,Permit No,OR No,Amount,Date Issued,Valid Until,Remarks\n";
+    data.forEach(function(r){
+      csv+=[r.project,r.owner,r.barangay,r.type,r.permitNo,r.orNo,r.amount,r.date,r.valid,r.remarks]
+        .map(function(v){return '"'+String(v||"").replace(/"/g,'""')+'"'}).join(",")+"\n";
+    });
+    var blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    a.href=url;a.download="OBO_Talisayan_Records_"+today()+".csv";
+    a.click();URL.revokeObjectURL(url);
+    toast("CSV file downloaded!");
+  };
+
+  $("#backup").onclick=function(){
+    var json=JSON.stringify(data,null,2);
+    var blob=new Blob([json],{type:"application/json"});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    a.href=url;a.download="OBO_Talisayan_Backup_"+today()+".json";
+    a.click();URL.revokeObjectURL(url);
+    toast("JSON Backup downloaded!");
+  };
+
+  $("#restoreBtn").onclick=function(){
+    $("#mFile").click();
+  };
+
+  $("#mFile").onchange=function(e){
+    var f=e.target.files[0];
+    if(!f)return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var imported=JSON.parse(rd.result);
+        if(Array.isArray(imported)){
+          data=imported;
+          save();
+          render();
+          toast("Successfully restored "+data.length+" records!");
+        } else {
+          alert("Invalid backup format.");
+        }
+      }catch(err){alert("Error reading backup file.");}
+    };
+    rd.readAsText(f);
+    e.target.value="";
+  };
+
+  load();
+  var sess=sessionStorage.getItem("obo_user");
+  if(sess){showApp(sess)}else{showApp("admin")}
+})();
+</script>
+</body>
+</html>

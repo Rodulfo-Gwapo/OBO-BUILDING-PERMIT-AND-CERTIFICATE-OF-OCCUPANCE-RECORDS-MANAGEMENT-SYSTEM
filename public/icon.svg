@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="oboBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#14527f" />
+      <stop offset="70%" stop-color="#0f3d64" />
+      <stop offset="100%" stop-color="#082238" />
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="100" fill="url(#oboBg)"/>
+  
+  <!-- Outer Gold Ring -->
+  <circle cx="256" cy="256" r="215" fill="none" stroke="#fcee21" stroke-width="8" />
+  <circle cx="256" cy="256" r="202" fill="none" stroke="#c9a800" stroke-width="2" stroke-dasharray="6,4" />
+  
+  <!-- Stars -->
+  <polygon points="120,130 126,144 140,144 128,154 133,168 120,158 107,168 112,154 100,144 114,144" fill="#fcee21"/>
+  <polygon points="392,130 398,144 412,144 400,154 405,168 392,158 379,168 384,154 372,144 386,144" fill="#fcee21"/>
+
+  <!-- Official Building / Pediment -->
+  <g filter="url(#shadow)">
+    <!-- Triangular Roof Pediment -->
+    <polygon points="256,120 130,195 382,195" fill="#ffffff" stroke="#c9a800" stroke-width="4"/>
+    <polygon points="256,138 155,190 357,190" fill="#fcee21" opacity="0.3"/>
+    
+    <!-- Architrave -->
+    <rect x="120" y="195" width="272" height="18" rx="3" fill="#fcee21" stroke="#c9a800" stroke-width="2"/>
+    
+    <!-- 4 Roman Pillars -->
+    <rect x="145" y="213" width="26" height="95" rx="3" fill="#ffffff"/>
+    <rect x="205" y="213" width="26" height="95" rx="3" fill="#ffffff"/>
+    <rect x="281" y="213" width="26" height="95" rx="3" fill="#ffffff"/>
+    <rect x="341" y="213" width="26" height="95" rx="3" fill="#ffffff"/>
+    
+    <!-- Pillar Details -->
+    <line x1="158" y1="218" x2="158" y2="303" stroke="#d9eefa" stroke-width="3"/>
+    <line x1="218" y1="218" x2="218" y2="303" stroke="#d9eefa" stroke-width="3"/>
+    <line x1="294" y1="218" x2="294" y2="303" stroke="#d9eefa" stroke-width="3"/>
+    <line x1="354" y1="218" x2="354" y2="303" stroke="#d9eefa" stroke-width="3"/>
+
+    <!-- Building Steps Base -->
+    <rect x="115" y="308" width="282" height="18" rx="2" fill="#fcee21" stroke="#c9a800" stroke-width="2"/>
+    <rect x="95" y="326" width="322" height="20" rx="3" fill="#ffffff" stroke="#cfe0ea" stroke-width="2"/>
+  </g>
+
+  <!-- Central Crest / Certificate Ribbon Badge -->
+  <g filter="url(#shadow)">
+    <rect x="156" y="360" width="200" height="46" rx="8" fill="#b3302a" stroke="#fcee21" stroke-width="3"/>
+    <text x="256" y="392" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="900" font-size="24" fill="#ffffff" letter-spacing="4">O.B.O.</text>
+  </g>
+
+  <!-- Subtitle Ribbon Curve text or banner -->
+  <text x="256" y="440" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-weight="700" font-size="14" fill="#fcee21" letter-spacing="1.5">BUILDING &amp; OCCUPANCY REGISTRY</text>
+</svg>

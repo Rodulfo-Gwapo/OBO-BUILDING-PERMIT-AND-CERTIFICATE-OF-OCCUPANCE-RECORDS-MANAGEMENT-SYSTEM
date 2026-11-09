@@ -1,0 +1,6 @@
+{
+  "name": "OBO BUILDING PERMIT & CERTIFICATE OF OCCUPANCY RECORDS MANAGEMENT SYSTEM",
+  "description": "Official Office of the Building Official (OBO) system for recording, tracking, and managing Building Permits, Certificates of Occupancy, fees, official receipts, and compliance across Mac, Windows, Android, and iOS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
